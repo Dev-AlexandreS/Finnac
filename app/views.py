@@ -14,3 +14,6 @@ def main(request):
 
 def wallet(request):
     return render(request, "logged/wallet.html")
+
+def generates(request):
+    return render(request, "logged/toGenerate.html")

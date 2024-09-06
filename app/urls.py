@@ -8,6 +8,6 @@ urlpatterns = [
     path('cadastro/', views.register, name="register"),
 
     path('finnac/', views.main, name="main"),
-
     path('finnac/wallet/', views.wallet, name="wallet"),
+    path('finnac/generates/', views.generates, name="generates"),
 ]
