@@ -15,7 +15,8 @@
 </div>
 <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
   <h1 class="text-2xl font-semibold mb-4 text-gray-600 dark:text-white">Cadastro</h1>
-  <form action="#" method="POST">
+  <form action="{% url 'register' %}" method="POST">
+    {% csrf_token %}
     <div class="mb-4">
       <label for="name" class="block text-gray-600 dark:text-white">Nome completo</label>
       <input type="text" id="name" name="name" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="Digite seu nome..." autocomplete="off">
@@ -29,8 +30,8 @@
         <input type="password" name="password" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="Digite sua senha..." autocomplete="off">
       </div>
       <div class="mb-4">
-        <label for="email" class="block text-gray-600 dark:text-white">Confirmar senha</label>
-        <input type="text" id="email" name="email" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="Confirme sua senha..." autocomplete="off">
+        <label class="block text-gray-600 dark:text-white">Confirmar senha</label>
+        <input type="text" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="Confirme sua senha..." autocomplete="off">
       </div>
 
     <div class="mb-6 text-blue-500">
