@@ -112,6 +112,16 @@ USE_I18N = True
 
 USE_TZ = True
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'btscrxansgmmz5jziycl',
+        'USER': 'utlakztualojl4j0',
+        'PASSWORD': 'n46ARB573ZXzh6fXskdq',
+        'HOST': 'btscrxansgmmz5jziycl-mysql.services.clever-cloud.com',
+        'PORT': '3306',
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/

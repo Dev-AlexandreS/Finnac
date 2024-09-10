@@ -10,5 +10,6 @@ urlpatterns = [
     path('finnac/logout/', views.logout, name="logout"),
     path('finnac/', views.main, name="main"),
     path('finnac/wallet/', views.wallet, name="wallet"),
+    path('finnac/wallet/add/', views.add, name="add"),
     path('finnac/generates/', views.generates, name="generates"),
 ]

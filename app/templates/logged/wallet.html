@@ -71,54 +71,54 @@
             </div>
             <!--Body-->
             <div class="my-5">
-                <form class="p-4 md:p-5">
+                <form class="p-4 md:p-5" method="post" action="{% url 'add' %}">
+                    {% csrf_token %}
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div class="col-span-2">
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome</label>
-                            <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nome" required="">
+                            <input type="text" name="nameAdd" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nome">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Preço</label>
-                            <input type="number" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="R$ 00,00" required="">
+                            <label for="priceAdd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Preço</label>
+                            <input type="number" step="0.01" name="priceAdd" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="R$ 00,00">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
-                            <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <label for="categoryAdd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
+                            <select id="categoryAdd" name="categoryAdd" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option selected="">Selecione uma categoria</option>
-                                <option value="TV">TV/Monitors</option>
-                                <option value="PC">PC</option>
-                                <option value="GA">Gaming/Console</option>
-                                <option value="PH">Phones</option>
+                                <option value="Fatura">Fatura</option>
+                                <option value="Boleto">Boleto</option>
+                                <option value="Outros">Outros</option>
                             </select>
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                          <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                          <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                          <label for="statusAdd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
+                          <select id="statusAdd" name="statusAdd" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                               <option selected="">Selecione o Status</option>
-                              <option value="Pago">Pago</option>
-                              <option value="Atrasado">Atrasado</option>
-                              <option value="Pendentes">Pendente</option>
+                              <option value="P">Pago</option>
+                              <option value="L">Atrasado</option>
+                              <option value="O">Devendo</option>
                               
                           </select>
                       </div>
                       <div class="col-span-2 sm:col-span-1">
-                          <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">tipo</label>
-                          <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                          <label for="typeAdd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">tipo</label>
+                          <select id="typeAdd" name="typeAdd" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                               <option selected="">Selecione o tipo de finança</option>
                               <option value="Ganho">Ganho</option>
                               <option value="Despesa">Despesa</option>                            
                           </select>
                       </div>
                         <div class="col-span-2 sm:col-span-1">
-                          <label for="data" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data</label>
-                          <input type="date" name="data" id="data" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="  /  /  " required="">
+                          <label for="dateAdd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data</label>
+                          <input type="date" name="dateAdd" id="dateAdd" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="  /  /  ">
                       </div>
                       
                     </div>
                     <div class="flex justify-end pt-2">
-                        <button
-                            class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300">Cancelar</button>
-                        <button
+                        <!-- <button
+                            class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300">Cancelar</button> -->
+                        <button type="submit"
                             class="focus:outline-none px-4 bg-teal-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400">Finalizar</button>
                     </div>
                 </form>

@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
-from .models import User
+from .models import User, Flow
 
 def home(request):
     return render(request, 'index.html')
@@ -61,6 +61,22 @@ def wallet(request):
         return render(request, "logged/wallet.html")
     else:
         return redirect("/login")
+
+def add(request):
+    if request.method == "POST":
+        name = request.POST.get("nameAdd")
+        category = request.POST.get("categoryAdd")
+        price = request.POST.get("priceAdd")
+        status = request.POST.get("statusAdd")
+        type = request.POST.get("typeAdd")
+        date = request.POST.get("dateAdd")
+        id_user = request.session['user_id']
+
+        flow = Flow(id_user=id_user,label_name=name, price=float(price), estatus=status, 
+                    dateBill=date, tipo=type, category=category)
+        flow.save()
+        return render(request, "logged/wallet.html")
+
 
 def generates(request):
     if 'user_id' in request.session:

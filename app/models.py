@@ -20,16 +20,11 @@ class User(models.Model):
 
 
     
-class Flow(models.Model):
-    STATUS_CHOICES = [
-        ('A', 'Active'),
-        ('I', 'Inactive'),
-    ]
-    
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Flow(models.Model):   
+    id_user = models.CharField(max_length=50)
     label_name = models.CharField(max_length=50)
     price = models.FloatField()
-    estatus = models.CharField(max_length=1, choices=STATUS_CHOICES)
+    estatus = models.CharField(max_length=1)
     dateBill = models.DateField()
     tipo = models.CharField(max_length=20)
     category = models.CharField(max_length=20)
