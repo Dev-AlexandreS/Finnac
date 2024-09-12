@@ -58,25 +58,63 @@ def logout(request):
 
 def wallet(request):
     if 'user_id' in request.session:
-        return render(request, "logged/wallet.html")
+        id = request.session['user_id']
+        flows = Flow.objects.filter(id_user = id)
+        for flow in flows:
+            flow.formatted_price = f"{flow.price:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+        for flow in flows:
+            if flow.estatus == "P":
+                flow.status = "Pago"
+            if flow.estatus == "L":
+                flow.status = "Atrasado"
+            if flow.estatus == "O":
+                flow.status = "Devendo"
+
+        return render(request, "logged/wallet.html", {'flows':flows}) 
     else:
         return redirect("/login")
 
 def add(request):
-    if request.method == "POST":
-        name = request.POST.get("nameAdd")
-        category = request.POST.get("categoryAdd")
-        price = request.POST.get("priceAdd")
-        status = request.POST.get("statusAdd")
-        type = request.POST.get("typeAdd")
-        date = request.POST.get("dateAdd")
-        id_user = request.session['user_id']
+    if 'user_id' in request.session:
+        if request.method == "POST":
+            name = request.POST.get("nameAdd")
+            category = request.POST.get("categoryAdd")
+            price = request.POST.get("priceAdd")
+            status = request.POST.get("statusAdd")
+            type = request.POST.get("typeAdd")
+            date = request.POST.get("dateAdd")
+            id_user = request.session['user_id']
 
-        flow = Flow(id_user=id_user,label_name=name, price=float(price), estatus=status, 
-                    dateBill=date, tipo=type, category=category)
-        flow.save()
-        return render(request, "logged/wallet.html")
+            flow = Flow(id_user=id_user,label_name=name, price=price, estatus=status, 
+                        dateBill=date, tipo=type, category=category)
+            flow.save()
+            print(date)
+            return redirect("/finnac/wallet")
+    return redirect("/login")
 
+def edit(request):
+    if 'user_id' in request.session:
+        if request.method == "POST":
+            id = request.POST.get("id_userModal")
+            name = request.POST.get("nameModal")
+            category = request.POST.get("categoryModal")
+            price = request.POST.get("priceModal")
+            status = request.POST.get("statusModal")
+            type = request.POST.get("typeModal")
+            date = request.POST.get("dateModal")
+            
+            # flow.save()
+            print(date)
+            return redirect("/finnac/wallet")
+    return redirect("/login")
+
+def delete(request, id):
+    if 'user_id' in request.session:
+        id_flow = id
+        flow = Flow.objects.get(id=id_flow)
+        flow.delete()
+        return redirect("/finnac/wallet")
+    return redirect("/login")
 
 def generates(request):
     if 'user_id' in request.session:
