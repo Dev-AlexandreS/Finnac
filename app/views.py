@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from .models import User, Flow
+from datetime import datetime
+import locale
 
 def home(request):
     return render(request, 'index.html')
@@ -29,15 +31,11 @@ def register(request):
         full_name = request.POST.get("name")
         email = request.POST.get("email")
         password = request.POST.get("password")
-        
-        # Cria um novo usuário
+    
         user = User(full_name=full_name, email=email)
         user.set_password(password)
         user.save()
-
-        # Autentica o usuário e cria uma sessão
-        # Note que o Django recomenda usar o modelo User padrão e suas funcionalidades de autenticação
-        user = User.objects.get(email=email)  # Aqui você deve buscar pelo email, já que a senha foi criptografada
+        user = User.objects.get(email=email)
         request.session['user_id'] = user.id
 
         return redirect("/finnac")
@@ -92,21 +90,54 @@ def add(request):
             return redirect("/finnac/wallet")
     return redirect("/login")
 
-def edit(request):
+
+
+def edit(request, id):
     if 'user_id' in request.session:
         if request.method == "POST":
-            id = request.POST.get("id_userModal")
             name = request.POST.get("nameModal")
             category = request.POST.get("categoryModal")
             price = request.POST.get("priceModal")
+            try:
+                price = price.replace('.', '').replace(',', '.')
+                price = float(price)
+            except ValueError:
+                return redirect("/finnac/wallet")
+            
             status = request.POST.get("statusModal")
             type = request.POST.get("typeModal")
             date = request.POST.get("dateModal")
+            locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+            print(f"Data recebida: {date}")
+            try:
+                date_obj = datetime.strptime(date, '%d de %B de %Y')
+                date = date_obj.strftime('%Y-%m-%d')
+            except ValueError as e:
+                print(f"Erro na conversão da data: {e}")
+                return redirect("/finnac/wallet")
+
+            if status == "Pago":
+                status = "P"
+            if status == "Atrasado":
+                status = "L"
+            if status == "Devendo":
+                status = "O"
+            item = Flow.objects.get(id=id)
+            item.label_name = name
+            item.price = price 
+            item.estatus = status
+            item.dateBill = date 
+            item.tipo = type
+            item.category = category
+            item.save()
             
-            # flow.save()
-            print(date)
             return redirect("/finnac/wallet")
+    
     return redirect("/login")
+
+
+
+
 
 def delete(request, id):
     if 'user_id' in request.session:

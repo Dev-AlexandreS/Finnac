@@ -12,5 +12,6 @@ urlpatterns = [
     path('finnac/wallet/', views.wallet, name="wallet"),
     path('finnac/wallet/add/', views.add, name="add"),
     path('delete/<int:id>', views.delete),
+    path('edit/<int:id>', views.edit, name="edit"),
     path('finnac/generates/', views.generates, name="generates"),
 ]
