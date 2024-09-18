@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 from django.contrib.auth.hashers import make_password, check_password
 
 class User(models.Model):

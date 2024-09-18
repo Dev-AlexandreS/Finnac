@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from .models import User, Flow
+from django.db.models import Sum, Q
 from datetime import datetime
+
 import locale
 
 def home(request):
@@ -45,7 +47,23 @@ def register(request):
 
 def main(request):
     if 'user_id' in request.session:
-        return render(request, "logged/main.html")
+        id = request.session['user_id']
+        total_ganho = Flow.objects.filter(id_user=id, tipo='Ganho').aggregate(Sum('price')) 
+        ganhos = total_ganho['price__sum'] or 0.00
+
+        
+        ganhos_formatado = f"{ganhos:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+
+       
+        total_despesas = Flow.objects.filter(id_user=id,tipo='Despesa').aggregate(Sum('price')) 
+        despesas = total_despesas['price__sum'] or 0.00
+
+        
+        despesas_formatado = f"{despesas:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+
+        faturamento = ganhos - despesas
+        faturamento_formatado = f"{faturamento:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+        return render(request, "logged/main.html", {'ganhos': ganhos_formatado, 'despesas': despesas_formatado, 'faturamento': faturamento_formatado})
     else:
         return redirect("/login")
 
