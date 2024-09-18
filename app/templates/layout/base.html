@@ -86,7 +86,7 @@
                     </button>
                 </div>
     
-                <div class="flex items-center">
+                {% comment %} <div class="flex items-center">
                     <div x-data="{ notificationOpen: false }" class="relative">
                         <button @click="notificationOpen = ! notificationOpen"
                             class="flex mx-4 text-gray-600 focus:outline-none">
@@ -167,7 +167,7 @@
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Logout</a>
                         </div>
                     </div>
-                </div>
+                </div> {% endcomment %}
             </header>
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
                 {% block main %}
