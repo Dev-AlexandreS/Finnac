@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import make_password, check_password
 
 class User(models.Model):
     full_name = models.CharField(max_length=30)
-    email = models.EmailField(max_length=50, unique=True)
+    email = models.EmailField(max_length=50)
     password = models.CharField(max_length=128)
 
     class Meta:
@@ -22,7 +22,7 @@ class User(models.Model):
 
     
 class Flow(models.Model):   
-    id_user = models.CharField(max_length=50)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
     label_name = models.CharField(max_length=50)
     price = models.FloatField()
     estatus = models.CharField(max_length=1)

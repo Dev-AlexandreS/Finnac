@@ -37,7 +37,7 @@ def register(request):
         user = User(full_name=full_name, email=email)
         user.set_password(password)
         user.save()
-        user = User.objects.get(email=email)
+        
         request.session['user_id'] = user.id
 
         return redirect("/finnac")
@@ -100,8 +100,8 @@ def add(request):
             type = request.POST.get("typeAdd")
             date = request.POST.get("dateAdd")
             id_user = request.session['user_id']
-
-            flow = Flow(id_user=id_user,label_name=name, price=price, estatus=status, 
+            user = User.objects.get(id=id_user)
+            flow = Flow(id_user=user,label_name=name, price=price, estatus=status, 
                         dateBill=date, tipo=type, category=category)
             flow.save()
             print(date)
