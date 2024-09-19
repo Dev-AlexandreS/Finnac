@@ -49,7 +49,7 @@ def register(request):
             user.save()
             
             request.session['user_id'] = user.id
-            return redirect('home')  # Redireciona para a página inicial ou onde preferir
+            return redirect("/finnac")  # Redireciona para a página inicial ou onde preferir
     
     return render(request, 'beforeLogin/register.html')
 
