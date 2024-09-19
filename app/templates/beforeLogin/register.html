@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finnac</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    
 </head>
 <body class="truncate">
 <div class="bg-white dark:bg-gray-900 flex justify-center items-center h-screen">
@@ -15,34 +16,117 @@
 </div>
 <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
   <h1 class="text-2xl font-semibold mb-4 text-gray-600 dark:text-white">Cadastro</h1>
-  <form action="{% url 'register' %}" method="POST">
+  <form id="registerForm" action="{% url 'register' %}" method="POST">
     {% csrf_token %}
+    {% if messages %}
     <div class="mb-4">
-      <label for="name" class="block text-gray-600 dark:text-white">Nome completo</label>
-      <input type="text" id="name" name="name" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="Digite seu nome..." autocomplete="off">
+        {% for message in messages %}
+            <p class="text-red-500">{{ message }}</p>
+        {% endfor %}
     </div>
+    {% endif %}
+    <div class="mb-4">
+        <label for="name" class="block text-gray-600 dark:text-white">Nome completo</label>
+        <input type="text" id="name" name="name" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="Digite seu nome..." autocomplete="off">
+        <span id="nameError" class="text-red-500 text-sm mt-1 hidden">O nome é obrigatório.</span>
+    </div>
+    
     <div class="mb-4">
         <label for="email" class="block text-gray-600 dark:text-white">E-mail</label>
         <input type="text" id="email" name="email" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="Digite seu e-mail..." autocomplete="off">
-      </div>
-      <div class="mb-4">
+        <span id="emailError" class="text-red-500 text-sm mt-1 hidden">Por favor, insira um e-mail válido.</span>
+    </div>
+    
+    <div class="mb-4">
         <label for="password" class="block text-gray-600 dark:text-white">Senha</label>
-        <input type="password" name="password" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="Digite sua senha..." autocomplete="off">
-      </div>
-      <div class="mb-4">
-        <label class="block text-gray-600 dark:text-white">Confirmar senha</label>
-        <input type="text" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="Confirme sua senha..." autocomplete="off">
-      </div>
+        <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="Digite sua senha..." autocomplete="off">
+        <span id="passwordError" class="text-red-500 text-sm mt-1 hidden">A senha deve ter no mínimo 8 caracteres.</span>
+    </div>
+    
+    <div class="mb-4">
+        <label for="confirmPassword" class="block text-gray-600 dark:text-white">Confirmar senha</label>
+        <input type="password" id="confirmPassword" name="confirm_password" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" placeholder="Confirme sua senha..." autocomplete="off">
+        <span id="confirmPasswordError" class="text-red-500 text-sm mt-1 hidden">As senhas não coincidem.</span>
+    </div>
 
     <div class="mb-6 text-blue-500">
-      <a href="{% url 'login' %}" class="hover:underline">Já tem uma conta? Clique aqui</a>
+        <a href="{% url 'login' %}" class="hover:underline">Já tem uma conta? Clique aqui</a>
     </div>
+    
     <button type="submit" class="bg-blue-700 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full">Cadastrar</button>
-  </form>
+</form>
+
   <div class="mt-6 text-blue-500 text-center">
     <a href="{% url 'home' %}" class="hover:underline">Voltar</a>
   </div>
 </div>
 </div>
 </body>
+<script>
+  document.getElementById('registerForm').addEventListener('submit', function(event) {
+      let valid = true;
+
+      // Validação do nome
+      const nameField = document.getElementById('name');
+      const nameError = document.getElementById('nameError');
+      if (nameField.value.trim() === '') {
+          nameError.classList.remove('hidden');
+          nameError.classList.add('block');
+          nameField.classList.add('border-red-500');
+          valid = false;
+      } else {
+          nameError.classList.add('hidden');
+          nameError.classList.remove('block');
+          nameField.classList.remove('border-red-500');
+      }
+
+      // Validação do e-mail
+      const emailField = document.getElementById('email');
+      const emailError = document.getElementById('emailError');
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (!emailPattern.test(emailField.value)) {
+          emailError.classList.remove('hidden');
+          emailError.classList.add('block');
+          emailField.classList.add('border-red-500');
+          valid = false;
+      } else {
+          emailError.classList.add('hidden');
+          emailError.classList.remove('block');
+          emailField.classList.remove('border-red-500');
+      }
+
+      // Validação da senha
+      const passwordField = document.getElementById('password');
+      const passwordError = document.getElementById('passwordError');
+      if (passwordField.value.length < 8) {
+          passwordError.classList.remove('hidden');
+          passwordError.classList.add('block');
+          passwordField.classList.add('border-red-500');
+          valid = false;
+      } else {
+          passwordError.classList.add('hidden');
+          passwordError.classList.remove('block');
+          passwordField.classList.remove('border-red-500');
+      }
+
+      // Validação da confirmação de senha
+      const confirmPasswordField = document.getElementById('confirmPassword');
+      const confirmPasswordError = document.getElementById('confirmPasswordError');
+      if (passwordField.value !== confirmPasswordField.value) {
+          confirmPasswordError.classList.remove('hidden');
+          confirmPasswordError.classList.add('block');
+          confirmPasswordField.classList.add('border-red-500');
+          valid = false;
+      } else {
+          confirmPasswordError.classList.add('hidden');
+          confirmPasswordError.classList.remove('block');
+          confirmPasswordField.classList.remove('border-red-500');
+      }
+
+      // Se o formulário não for válido, impedir o envio
+      if (!valid) {
+          event.preventDefault();
+      }
+  });
+</script>
 </html>

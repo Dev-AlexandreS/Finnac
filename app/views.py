@@ -29,21 +29,29 @@ def login(request):
         return render(request, "beforeLogin/login.html")
 
 def register(request):
-    if request.method == "POST":
-        full_name = request.POST.get("name")
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-    
-        user = User(full_name=full_name, email=email)
-        user.set_password(password)
-        user.save()
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
         
-        request.session['user_id'] = user.id
-
-        return redirect("/finnac")
+        # Validações no servidor
+        if password != confirm_password:
+            messages.error(request, 'As senhas não coincidem.')
+        elif len(password) < 8:
+            messages.error(request, 'A senha deve ter no mínimo 6 caracteres.')
+        elif User.objects.filter(email=email).exists():
+            messages.error(request, 'Um usuário com este e-mail já existe.')
+        else:
+            # Cria o novo usuário
+            user = User(full_name=name, email=email)
+            user.set_password(password)
+            user.save()
+            
+            request.session['user_id'] = user.id
+            return redirect('home')  # Redireciona para a página inicial ou onde preferir
     
-    elif request.method == "GET":
-        return render(request, "beforeLogin/register.html")
+    return render(request, 'beforeLogin/register.html')
 
 def main(request):
     if 'user_id' in request.session:
