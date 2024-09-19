@@ -1,0 +1,65 @@
+{% extends '../layout/base.html' %}
+
+{% block main %}
+
+<div class="h-screen bg-gray-200 p-8">
+    <div class="bg-white rounded-lg shadow-xl pb-8">
+        <div class="flex flex-col items-center -mt-20 mt-2">
+            <img src="https://vojislavd.com/ta-template-demo/assets/img/profile.jpg" class="w-40 border-4 border-white rounded-full">
+            <div class="flex items-center space-x-2 mt-2">
+                <p class="text-2xl">{{ user.full_name }}</p>
+                <span class="bg-blue-500 rounded-full p-1" title="Verified">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-100 h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </span>
+            </div>
+            <p class="text-gray-700">{{ user.email }}</p>
+        </div>
+    </div>
+
+<!-- ------------------------------------------------------------------------------------------------------------- -->
+
+<div class="container px-6 py-8 mx-auto -mt-10">
+<!-- component -->
+<div class="font-sans flex h-full items-center justify-center">
+    <div x-data="{ openTab: 1 }" class="p-8">
+        <div class="max-w-md mx-auto">
+            <div class="mb-4 flex space-x-4 p-2 bg-white rounded-lg shadow-md">
+                <button x-on:click="openTab = 1" :class="{ 'bg-blue-600 text-white': openTab === 1 }" class="flex-1 py-2 px-7 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300">Saldo</button>
+                <button x-on:click="openTab = 2" :class="{ 'bg-blue-600 text-white': openTab === 2 }" class="flex-1 py-2 px-7 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300">Crédito</button>
+                <!-- <button x-on:click="openTab = 3" :class="{ 'bg-blue-600 text-white': openTab === 3 }" class="flex-1 py-2 px-7 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300">Saldo</button> -->
+            </div>
+
+            <div x-show="openTab === 1" class="transition-all duration-300 bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-600">
+                <h2 class="text-2xl font-semibold mb-2 text-blue-600">Saldo</h2>
+                <p class="text-gray-700">Insira seu saldo total.</p>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" class="form-control mb-3" placeholder="R$00,00" disabled>
+                    <input type="submit" value="Aplicar" class="btn btn-primary">
+                </form>
+                <!-- <input type="button" value="Atulizar" class="btn btn-primary"> -->
+            </div>
+
+            <div x-show="openTab === 2" class="transition-all duration-300 bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-600">
+                <h2 class="text-2xl font-semibold mb-2 text-blue-600">Crédito</h2>
+                <p class="text-gray-700">Insira seu crédito total.</p>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" class="form-control mb-3" placeholder="R$00,00" disabled>
+                    <input type="submit" value="Aplicar" class="btn btn-primary">
+                </form>
+                <!-- <input type="button" value="Atulizar" class="btn btn-primary"> -->
+            </div>
+
+            <!-- <div x-show="openTab === 3" class="transition-all duration-300 bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-600">
+                <h2 class="text-2xl font-semibold mb-2 text-blue-600">Section 3 Content</h2>
+                <p class="text-gray-700">Fusce hendrerit urna vel tortor luctus, nec tristique odio tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.</p>
+            </div> -->
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+
+{% endblock %}

@@ -71,7 +71,9 @@ def main(request):
 
         faturamento = ganhos - despesas
         faturamento_formatado = f"{faturamento:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
-        return render(request, "logged/main.html", {'ganhos': ganhos_formatado, 'despesas': despesas_formatado, 'faturamento': faturamento_formatado})
+
+        return render(request, "logged/main.html", {'ganhos': ganhos_formatado, 'despesas': despesas_formatado, 'faturamento': faturamento_formatado
+                                                    , 'id' : id})
     else:
         return redirect("/login")
 
@@ -161,10 +163,6 @@ def edit(request, id):
     
     return redirect("/login")
 
-
-
-
-
 def delete(request, id):
     if 'user_id' in request.session:
         id_flow = id
@@ -178,3 +176,12 @@ def generates(request):
         return render(request, "logged/toGenerate.html")
     else:
         return redirect("/login")
+    
+def profile(request):
+    if 'user_id' in request.session:
+        if request.method == "GET":
+            id = request.session['user_id']
+            user = User.objects.get(id=id)
+            
+            return render(request, "logged/profile.html", {'user' : user})
+    return redirect("/login")
