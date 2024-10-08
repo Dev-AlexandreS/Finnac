@@ -156,12 +156,12 @@ def wallet(request):
         for flow in flows:
             flow.formatted_price = f"{flow.price:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
         for flow in flows:
-            if flow.estatus == "P":
-                flow.status = "Pago"
-            if flow.estatus == "L":
-                flow.status = "Atrasado"
-            if flow.estatus == "O":
-                flow.status = "Devendo"
+            if flow.estatus == "S":
+                flow.status = "Único"
+            if flow.estatus == "A":
+                flow.status = "Recorrente"
+            if flow.estatus == "I":
+                flow.status = "Parcelado"
 
         return render(request, "logged/wallet.html", {'flows':flows}) 
     else:

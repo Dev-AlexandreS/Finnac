@@ -59,7 +59,7 @@
         <div class="modal-content py-4 text-left px-6">
             <!--Title-->
             <div class="flex justify-between items-center pb-3">
-                <p class="text-2xl font-bold">Preencha todos os dados</p>
+                <p class="text-2xl font-bold -mb-10">Preencha todos os dados</p>
                 <div class="modal-close cursor-pointer z-50">
                     <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                         viewBox="0 0 18 18">
@@ -71,7 +71,7 @@
             </div>
             <!--Body-->
             <div class="my-5">
-                <form class="p-4 md:p-5" method="post" action="{% url 'add' %}">
+                <form class="p-4 md:p-5 -mt-10" method="post" action="{% url 'add' %}">
                     {% csrf_token %}
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div class="col-span-2">
@@ -86,18 +86,34 @@
                             <label for="categoryAdd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
                             <select id="categoryAdd" name="categoryAdd" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option selected="">Selecione uma categoria</option>
-                                <option value="Fatura">Fatura</option>
-                                <option value="Boleto">Boleto</option>
+                                <option value="Alimentação">Alimentação</option>
+                                <option value="Compras e lazer">Compras e lazer</option>
+                                <option value="Moradia">Moradia</option>
+                                <option value="Saúde e bem-estar">Saúde e bem-estar</option>
+                                <option value="Investimentos">Investimentos</option>
+                                <option value="Transferências e pagamentos">Transferências e pagamentos</option>
+                                <option value="Empréstimos">Empréstimos</option>
+                                <option value="Renda">Renda</option>
+                                <option value="Impostos e taxas">Impostos e taxas</option>
+                                <option value="Educação">Educação</option>
+                                <option value="Transporte">Transporte</option>
+                                <option value="Emergências">Emergências</option>
+                                <option value="Streaming">Streaming</option>
+                                <option value="Assinaturas">Assinaturas</option>
+                                <option value="Viagem">Viagem</option>
+                                <option value="Poupança">Poupança</option>
+                                <option value="Seguros">Seguros</option>
+                                <option value="Manutenção e reparos">Manutenção e reparos</option>
                                 <option value="Outros">Outros</option>
                             </select>
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                          <label for="statusAdd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
+                          <label for="statusAdd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lançamento</label>
                           <select id="statusAdd" name="statusAdd" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                              <option selected="">Selecione o Status</option>
-                              <option value="P">Pago</option>
-                              <option value="L">Atrasado</option>
-                              <option value="O">Devendo</option>
+                              <option selected="">Selecione o Lançamento</option>
+                              <option value="S">Único</option>
+                              <option value="A">Recorrente</option>
+                              <option value="I">Parcelado</option>
                               
                           </select>
                       </div>
@@ -107,6 +123,7 @@
                               <option selected="">Selecione o tipo de finança</option>
                               <option value="Ganho">Ganho</option>
                               <option value="Despesa">Despesa</option>                            
+                              <option value="Transferências">Transferências</option>                            
                           </select>
                       </div>
                         <div class="col-span-2 sm:col-span-1">
@@ -183,8 +200,8 @@
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Nome</th>
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Categoria</th>
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Valor</th>
-                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Status</th>
-                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">tipo</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Lançamento</th>
+                    <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Tipo</th>
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Data</th>
                     <th class="px-6 py-3 border-b-2 border-gray-300 text-left text-sm leading-4 text-blue-500 tracking-wider">Detalhes</th>
                 </tr>
@@ -200,15 +217,15 @@
                         <td class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">R$ {{ flow.formatted_price }}</td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b text-blue-900 border-gray-500 text-sm leading-5">
                             
-                                {% if  flow.status  == "Pago"%}
+                                {% if  flow.status  == "Único"%}
                             <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                             <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
                                 {% endif %}
-                                {% if  flow.status  == "Devendo"%}
+                                {% if  flow.status  == "Recorrente"%}
                             <span class="relative inline-block px-3 py-1 font-semibold text-yellow-900 leading-tight">
                             <span aria-hidden class="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"></span>
                                 {% endif %}
-                                {% if  flow.status  == "Atrasado"%}
+                                {% if  flow.status  == "Parcelado"%}
                             <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                             <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
                                 {% endif %}
@@ -225,6 +242,10 @@
                             {% if  flow.tipo  == "Despesa"%}
                         <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                         <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                            {% endif %}
+                            {% if  flow.tipo  == "Transferências"%}
+                            <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                            <span aria-hidden class="absolute inset-0 bg-yellow-200 opacity-50 rounded-full"></span>
                             {% endif %}
                         <span class="relative text-xs">{{ flow.tipo }}</span>
                     </span>
