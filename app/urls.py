@@ -14,6 +14,9 @@ urlpatterns = [
     path('delete/<int:id>', views.delete),
     path('edit/<int:id>', views.edit, name="edit"),
     path('finnac/generates/', views.generates, name="generates"),
+    path('finnac/accounts/add/', views.addAccount, name="addAccount"),
+    path('finnac/accounts/edit/', views.editAccount, name="editAccount"),
+    path('finnac/accounts/delete/<int:id>/', views.deleteAccount, name="deleteAccount"),
 
     path('finnac/profile/', views.profile, name="profile"),
 ]

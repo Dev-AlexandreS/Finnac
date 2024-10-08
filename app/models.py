@@ -24,7 +24,7 @@ class User(models.Model):
 class Flow(models.Model):   
     id_user = models.ForeignKey(User, on_delete=models.CASCADE)
     label_name = models.CharField(max_length=50)
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     estatus = models.CharField(max_length=1)
     dateBill = models.DateField()
     tipo = models.CharField(max_length=20)
@@ -33,3 +33,14 @@ class Flow(models.Model):
         db_table = 'flow'
     def __str__(self):
         return self.label_name
+    
+class Accounts(models.Model):
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    bank_name = models.CharField(max_length=50)
+    coast = models.DecimalField(max_digits=10, decimal_places=2)  # Mudado para DecimalField
+
+    class Meta:
+        db_table = 'accounts'  # Adicionado db_table ausente
+
+    def __str__(self):
+        return self.bank_name

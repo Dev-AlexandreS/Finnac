@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
-from .models import User, Flow
+from .models import User, Flow, Accounts
 from django.db.models import Sum, Q
 from datetime import datetime
+from decimal import Decimal
 
 import locale
 
@@ -49,33 +50,99 @@ def register(request):
             user.save()
             
             request.session['user_id'] = user.id
-            return redirect("/finnac")  # Redireciona para a página inicial ou onde preferir
-    
+            return redirect("/finnac")  
     return render(request, 'beforeLogin/register.html')
+
+
+
 
 def main(request):
     if 'user_id' in request.session:
         id = request.session['user_id']
-        total_ganho = Flow.objects.filter(id_user=id, tipo='Ganho').aggregate(Sum('price')) 
-        ganhos = total_ganho['price__sum'] or 0.00
-
         
+        total_ganho = Flow.objects.filter(id_user=id, tipo='Ganho').aggregate(Sum('price')) 
+        ganhos = total_ganho['price__sum'] or Decimal('0.00')  
+    
+        total_contas = Accounts.objects.filter(id_user=id).aggregate(Sum('coast'))
+        total_contas = total_contas['coast__sum'] or Decimal('0.00')  
+        
+       
+        ganhos += total_contas  
         ganhos_formatado = f"{ganhos:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
 
-       
-        total_despesas = Flow.objects.filter(id_user=id,tipo='Despesa').aggregate(Sum('price')) 
-        despesas = total_despesas['price__sum'] or 0.00
-
-        
+      
+        total_despesas = Flow.objects.filter(id_user=id, tipo='Despesa').aggregate(Sum('price')) 
+        despesas = total_despesas['price__sum'] or Decimal('0.00')  
         despesas_formatado = f"{despesas:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
 
-        faturamento = ganhos - despesas
+      
+        faturamento = ganhos - despesas  
         faturamento_formatado = f"{faturamento:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
 
-        return render(request, "logged/main.html", {'ganhos': ganhos_formatado, 'despesas': despesas_formatado, 'faturamento': faturamento_formatado
-                                                    , 'id' : id})
+        accounts = Accounts.objects.filter(id_user=id)  
+
+        return render(request, "logged/main.html", {
+            'ganhos': ganhos_formatado,  
+            'despesas': despesas_formatado,
+            'faturamento': faturamento_formatado,
+            'id': id,
+            'contas': accounts,
+            'total_contas': f"{total_contas:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')  # Formatação opcional
+        })
+    return redirect("/login")
+
+
+
+def addAccount(request):
+    if request.method == 'POST':
+        bank = request.POST['bank']
+        price = request.POST['accountValue']
+        if 'user_id' in request.session:
+            id_user = request.session['user_id']
+            try:
+                user = User.objects.get(id=id_user)
+                accounts = Accounts(id_user=user, bank_name=bank, coast=price)
+                accounts.save()
+                print("Conta adicionada com sucesso.")
+                return redirect("/finnac")
+            except User.DoesNotExist:
+                print("Usuário não encontrado.")
+                return redirect("/finnac")
+            except Exception as e:
+                print(f"Ocorreu um erro: {e}")
+                return redirect("/finnac")
     else:
+        print("erro ao add conta ")
+        
+        return redirect("/finnac")
+
+def deleteAccount(request, id):
+    if request.method == 'GET':
+        if 'user_id' in request.session:
+            if 'user_id' in request.session:
+                id_account = id
+                account = Accounts.objects.get(id=id_account)
+                account.delete()
+                print("deletado")
+                return redirect("/finnac")
         return redirect("/login")
+        
+
+def editAccount(request):
+    if request.method == 'POST':
+        bank = request.POST["editBank"]
+        coast = request.POST["editAccountValue"]
+        idAccount = request.POST["idAccount"]
+        coast = coast.replace(',', '.')  # Substitui a vírgula por ponto
+        coast = float(coast)
+        account = Accounts.objects.get(id=idAccount)
+        
+        account.bank_name = bank
+        account.coast = coast
+    
+        account.save()
+        
+        return redirect("/finnac")
 
 def logout(request):
     if 'user_id' in request.session:
