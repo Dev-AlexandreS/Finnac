@@ -133,7 +133,7 @@ def editAccount(request):
         bank = request.POST["editBank"]
         coast = request.POST["editAccountValue"]
         idAccount = request.POST["idAccount"]
-        coast = coast.replace(',', '.')  # Substitui a vírgula por ponto
+        coast = coast.replace(',', '.') 
         coast = float(coast)
         account = Accounts.objects.get(id=idAccount)
         

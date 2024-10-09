@@ -127,9 +127,7 @@
     <h3 class="text-3xl font-medium mt-4 text-gray-700">Contas</h3>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 p-1 gap-4">
-      <!--  -->
       <style>
-        /* Compiled dark classes from Tailwind */
         .dark .dark\:divide-gray-700 > :not([hidden]) ~ :not([hidden]) {
           border-color: rgba(55, 65, 81);
         }
@@ -236,7 +234,6 @@
           color: rgba(59, 130, 246);
         }
 
-        /* Custom style */
         .header-right {
           width: calc(100% - 3.5rem);
         }
@@ -249,7 +246,6 @@
           }
         }
       </style>
-      <!--  -->
       <style>
         .modal {
           display: none;
@@ -278,7 +274,6 @@
               Adicionar
             </button>
           </div>
-          <!-- Tabela -->
           <div class="overflow-x-auto">
             <table
               class="min-w-full bg-transparent border border-gray-300 py-1 rounded-lg"
@@ -298,7 +293,7 @@
                   <td class="px-4 py-2 border-b">
                     <button
                       id="openModal2"
-                      class="bg-yellow-500 text-white px-2 py-1 rounded-lg hover:bg-yellow-600 transition openModal2"
+                      class="bg-yellow-500 mb-2 text-white text-center px-2 py-1 rounded-lg hover:bg-yellow-600 transition openModal2"
                       data-bank="{{ conta.bank_name }}"
                       data-coast="{{ conta.coast }}"
                       data-id="{{ conta.id }}"
@@ -307,7 +302,7 @@
                     </button>
                     <a
                       href="accounts/delete/{{ conta.id }}"
-                      class="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 transition"
+                      class="bg-red-500 text-white px-2 py-1 text-center rounded-lg hover:bg-red-600 transition"
                       >Apagar</a
                     >
                   </td>
@@ -318,7 +313,6 @@
           </div>
         </div>
 
-        <!-- Modal para Adicionar -->
         <div id="myModal" class="modal flex items-center justify-center">
           <div class="bg-white p-6 rounded-lg shadow-lg">
             <h2 class="text-lg font-bold mb-4">Adicionar Instituição</h2>
@@ -421,7 +415,7 @@
                   <option value="Banrisul">Banrisul</option>
                   <option value="Banco Inter">Banco Inter</option>
                   <option value="Banco Original">Banco Original</option>
-                  <option value="nubank">nubank</option>
+                  <option value="nubank">Nubank</option>
                 </select>
               </div>
               <div class="mb-4">
@@ -568,19 +562,11 @@ const myDoughnutChart = new Chart(ctx, {
           const inputValue = document.getElementById("editAccountValue");
           inputValue.value = coast;
           idAccount.value = id;
-
-          // Definindo o valor do select
           Array.from(selectBank.options).forEach((option) => {
             option.selected = option.value === bank;
           });
-
-          // Definindo o valor do input
-
-          // Exibindo o modal
           document.getElementById("myModal2").style.display = "flex";
         }
-
-        // Abrindo modal de editar
         const openModal2Buttons = document.querySelectorAll(".openModal2");
         openModal2Buttons.forEach((button) => {
           button.onclick = function () {
@@ -588,12 +574,10 @@ const myDoughnutChart = new Chart(ctx, {
             const bank = this.getAttribute("data-bank");
             const value = this.getAttribute("data-coast");
 
-            // Chamar a função para abrir o modal
             openEditModal(bank, value, id);
           };
         });
 
-        // Fechando modal de editar
         const closeModal2 = document.getElementById("closeModal2");
         closeModal2.onclick = function () {
           document.getElementById("myModal2").style.display = "none";
