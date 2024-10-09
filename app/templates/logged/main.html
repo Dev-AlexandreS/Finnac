@@ -1,401 +1,615 @@
-{% extends '../layout/base.html' %}
-
-{% block main %}
-
-{% load static %}
-
+{% extends '../layout/base.html' %} {% block main %} {% load static %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="container px-6 py-8 mx-auto">
-    <h3 class="text-3xl font-medium text-gray-700">Dashboard</h3>
+  <h3 class="text-3xl font-medium text-gray-700">Dashboard</h3>
 
-    <div class="mt-4">
-        <div class="flex flex-wrap -mx-6">
-            <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
-                <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
-                    <div class="p-3 bg-green-600 bg-opacity-75 rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-6 h-6 text-white">
-                            <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"></path>
-                            <path fill-rule="evenodd" d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 14.625v-9.75zM8.25 9.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM18.75 9a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V9.75a.75.75 0 00-.75-.75h-.008zM4.5 9.75A.75.75 0 015.25 9h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V9.75z" clip-rule="evenodd"></path>
-                            <path d="M2.25 18a.75.75 0 000 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 00-.75-.75H2.25z"></path>
-                          </svg>
-                    </div>
+  <div class="mt-4">
+    <div class="flex flex-wrap -mx-6">
+      <div class="w-full px-6 sm:w-1/2 xl:w-1/3">
+        <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+          <div class="p-3 bg-green-600 bg-opacity-75 rounded-full">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+              class="w-6 h-6 text-white"
+            >
+              <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"></path>
+              <path
+                fill-rule="evenodd"
+                d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 14.625v-9.75zM8.25 9.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM18.75 9a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V9.75a.75.75 0 00-.75-.75h-.008zM4.5 9.75A.75.75 0 015.25 9h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V9.75z"
+                clip-rule="evenodd"
+              ></path>
+              <path
+                d="M2.25 18a.75.75 0 000 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 00-.75-.75H2.25z"
+              ></path>
+            </svg>
+          </div>
 
-                    <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">R$ {{ganhos}}</h4>
-                        <div class="text-gray-500">Receitas</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
-                <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
-                    <div class="p-3 bg-red-600 bg-opacity-75 rounded-full">
-                        <svg class="w-6 h-6 text-white" viewBox="0 0 28 28" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M4.19999 1.4C3.4268 1.4 2.79999 2.02681 2.79999 2.8C2.79999 3.57319 3.4268 4.2 4.19999 4.2H5.9069L6.33468 5.91114C6.33917 5.93092 6.34409 5.95055 6.34941 5.97001L8.24953 13.5705L6.99992 14.8201C5.23602 16.584 6.48528 19.6 8.97981 19.6H21C21.7731 19.6 22.4 18.9732 22.4 18.2C22.4 17.4268 21.7731 16.8 21 16.8H8.97983L10.3798 15.4H19.6C20.1303 15.4 20.615 15.1004 20.8521 14.6261L25.0521 6.22609C25.2691 5.79212 25.246 5.27673 24.991 4.86398C24.7357 4.45123 24.2852 4.2 23.8 4.2H8.79308L8.35818 2.46044C8.20238 1.83722 7.64241 1.4 6.99999 1.4H4.19999Z"
-                                fill="currentColor"></path>
-                            <path
-                                d="M22.4 23.1C22.4 24.2598 21.4598 25.2 20.3 25.2C19.1403 25.2 18.2 24.2598 18.2 23.1C18.2 21.9402 19.1403 21 20.3 21C21.4598 21 22.4 21.9402 22.4 23.1Z"
-                                fill="currentColor"></path>
-                            <path
-                                d="M9.1 25.2C10.2598 25.2 11.2 24.2598 11.2 23.1C11.2 21.9402 10.2598 21 9.1 21C7.9402 21 7 21.9402 7 23.1C7 24.2598 7.9402 25.2 9.1 25.2Z"
-                                fill="currentColor"></path>
-                        </svg>
-                    </div>
-
-                    <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">R$ {{despesas}}</h4>
-                        <div class="text-gray-500">Despesas</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
-                <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
-                    <div class="p-3 bg-yellow-600 bg-opacity-75 rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-6 h-6 text-white">
-                            <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z"></path>
-                          </svg>
-                    </div>
-
-                    <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">R$ {{faturamento}}</h4>
-                        <div class="text-gray-500">Balanço</div>
-                    </div>
-                </div>
-            </div>
-            <div class="w-full px-6 mt-3 sm:w-1/2 xl:w-1/3 xl:mt-0">
-                <div class="flex items-center mt-4 px-5 py-6 bg-white rounded-md shadow-sm">
-                    <div class=" p-3 bg-blue-600 bg-opacity-75 rounded-full">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-6 h-6 text-white">
-                        <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"></path>
-                        <path fill-rule="evenodd" d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 14.625v-9.75zM8.25 9.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM18.75 9a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V9.75a.75.75 0 00-.75-.75h-.008zM4.5 9.75A.75.75 0 015.25 9h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V9.75z" clip-rule="evenodd"></path>
-                        <path d="M2.25 18a.75.75 0 000 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 00-.75-.75H2.25z"></path>
-                      </svg>
-                    </div>
-
-                    <div class="mx-5">
-                        <h4 class="text-2xl font-semibold text-gray-700">R$ {{total_contas}}</h4>
-                        <div class="text-gray-500">Total em contas</div>
-                    </div>
-                   
-                     
-                </div>
-            </div>
-            
+          <div class="mx-5">
+            <h4 class="text-2xl font-semibold text-gray-700">R$ {{ganhos}}</h4>
+            <div class="text-gray-500">Receitas</div>
+          </div>
         </div>
-        <h3 class="text-3xl font-medium mt-4 text-gray-700">Contas</h3>
+      </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 p-1 gap-4">
-            <!--  -->
-            <style>
-                /* Compiled dark classes from Tailwind */
-                .dark .dark\:divide-gray-700 > :not([hidden]) ~ :not([hidden]) {
-                  border-color: rgba(55, 65, 81);
-                }
-                .dark .dark\:bg-gray-50 {
-                  background-color: rgba(249, 250, 251);
-                }
-                .dark .dark\:bg-gray-100 {
-                  background-color: rgba(243, 244, 246);
-                }
-                .dark .dark\:bg-gray-600 {
-                  background-color: rgba(75, 85, 99);
-                }
-                .dark .dark\:bg-gray-700 {
-                  background-color: rgba(55, 65, 81);
-                }
-                .dark .dark\:bg-gray-800 {
-                  background-color: rgba(31, 41, 55);
-                }
-                .dark .dark\:bg-gray-900 {
-                  background-color: rgba(17, 24, 39);
-                }
-                .dark .dark\:bg-red-700 {
-                  background-color: rgba(185, 28, 28);
-                }
-                .dark .dark\:bg-green-700 {
-                  background-color: rgba(4, 120, 87);
-                }
-                .dark .dark\:hover\:bg-gray-200:hover {
-                  background-color: rgba(229, 231, 235);
-                }
-                .dark .dark\:hover\:bg-gray-600:hover {
-                  background-color: rgba(75, 85, 99);
-                }
-                .dark .dark\:hover\:bg-gray-700:hover {
-                  background-color: rgba(55, 65, 81);
-                }
-                .dark .dark\:hover\:bg-gray-900:hover {
-                  background-color: rgba(17, 24, 39);
-                }
-                .dark .dark\:border-gray-100 {
-                  border-color: rgba(243, 244, 246);
-                }
-                .dark .dark\:border-gray-400 {
-                  border-color: rgba(156, 163, 175);
-                }
-                .dark .dark\:border-gray-500 {
-                  border-color: rgba(107, 114, 128);
-                }
-                .dark .dark\:border-gray-600 {
-                  border-color: rgba(75, 85, 99);
-                }
-                .dark .dark\:border-gray-700 {
-                  border-color: rgba(55, 65, 81);
-                }
-                .dark .dark\:border-gray-900 {
-                  border-color: rgba(17, 24, 39);
-                }
-                .dark .dark\:hover\:border-gray-800:hover {
-                  border-color: rgba(31, 41, 55);
-                }
-                .dark .dark\:text-white {
-                  color: rgba(255, 255, 255);
-                }
-                .dark .dark\:text-gray-50 {
-                  color: rgba(249, 250, 251);
-                }
-                .dark .dark\:text-gray-100 {
-                  color: rgba(243, 244, 246);
-                }
-                .dark .dark\:text-gray-200 {
-                  color: rgba(229, 231, 235);
-                }
-                .dark .dark\:text-gray-400 {
-                  color: rgba(156, 163, 175);
-                }
-                .dark .dark\:text-gray-500 {
-                  color: rgba(107, 114, 128);
-                }
-                .dark .dark\:text-gray-700 {
-                  color: rgba(55, 65, 81);
-                }
-                .dark .dark\:text-gray-800 {
-                  color: rgba(31, 41, 55);
-                }
-                .dark .dark\:text-red-100 {
-                  color: rgba(254, 226, 226);
-                }
-                .dark .dark\:text-green-100 {
-                  color: rgba(209, 250, 229);
-                }
-                .dark .dark\:text-blue-400 {
-                  color: rgba(96, 165, 250);
-                }
-                .dark .group:hover .dark\:group-hover\:text-gray-500 {
-                  color: rgba(107, 114, 128);
-                }
-                .dark .group:focus .dark\:group-focus\:text-gray-700 {
-                  color: rgba(55, 65, 81);
-                }
-                .dark .dark\:hover\:text-gray-100:hover {
-                  color: rgba(243, 244, 246);
-                }
-                .dark .dark\:hover\:text-blue-500:hover {
-                  color: rgba(59, 130, 246);
-                }
-              
-                /* Custom style */
-                .header-right {
-                    width: calc(100% - 3.5rem);
-                }
-                .sidebar:hover {
-                    width: 16rem;
-                }
-                @media only screen and (min-width: 768px) {
-                    .header-right {
-                        width: calc(100% - 16rem);
-                    }        
-                }
-              </style>
-            <!--  -->
-            <style>
-                .modal {
-                    display: none;
-                    position: fixed;
-                    z-index: 50;
-                    left: 0;
-                    top: 0;
-                    width: 100%;
-                    height: 100%;
-                    overflow: auto;
-                    background-color: rgba(0, 0, 0, 0.5);
-                }
-            </style>
-            <div class="container mx-auto p-6">
-                <div class="relative flex flex-col bg-white shadow-lg rounded-lg p-4 mb-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-semibold text-xl text-gray-800">Minhas Contas</h3>
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition" id="openModal">Adicionar</button>
-                    </div>
-                    <!-- Tabela -->
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full bg-transparent border border-gray-300 px-2 py-1 rounded-lg">
-                            <thead>
-                                <tr class="bg-gray-100 text-gray-600">
-                                    <th class="px-4 py-2 border-b">Instituição</th>
-                                    <th class="px-4 py-2 border-b">Valor</th>
-                                    <th class="px-4 py-2 border-b">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              {% for conta in contas %}
-                                <tr class="text-gray-700">
-                                    <td class="px-4 py-2 border-b">{{conta.bank_name}}</td>
-                                    <td class="px-4 py-2 border-b">{{conta.coast}}</td>
-                                    <td class="px-4 py-2 border-b">
-                                        <button id="openModal2" class="bg-yellow-500 text-white px-2 py-1 rounded-lg hover:bg-yellow-600 transition openModal2" 
-                                        data-bank="{{ conta.bank_name }}" 
-                                        data-coast="{{ conta.coast }}"
-                                        data-id="{{ conta.id }}"
-                                        >Editar</button>
-                                        <a href="accounts/delete/{{conta.id}}" class="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 transition">Apagar</a>
-                                    </td>
-                                  </tr>
-                                  {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-        
-                <!-- Modal para Adicionar -->
-                <div id="myModal" class="modal flex items-center justify-center">
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h2 class="text-lg font-bold mb-4">Adicionar Instituição</h2>
-                        <form id="institutionForm" action="{% url 'addAccount' %}" method="POST">
-                          {% csrf_token %}
-                            <div class="mb-4">
-                                <label for="bank" class="block text-sm font-medium text-gray-700">Banco</label>
-                                <select id="bank" name="bank" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
-                                    <option value="" disabled selected>Selecione um banco</option>
-                                    <option value="Itaú">Itaú</option>
-                                    <option value="Bradesco">Bradesco</option>
-                                    <option value="Santander">Santander</option>
-                                    <option value="Caixa Econômica Federal">Caixa Econômica Federal</option>
-                                    <option value="HSBC">HSBC</option>
-                                    <option value="Banco Safra">Banco Safra</option>
-                                    <option value="Banrisul">Banrisul</option>
-                                    <option value="Banco Inter">Banco Inter</option>
-                                    <option value="Banco Original">Banco Original</option>
-                                    <option value="nubank">nubank</option>
-                                </select>
-                            </div>
-                            <div class="mb-4">
-                                <label for="accountValue" class="block text-sm font-medium text-gray-700">Valor na Conta</label>
-                                <input type="number" id="accountValue" name="accountValue" required class="mt-1 p-2 border border-gray-300 rounded-md w-full">
-                            </div>
-                            <div class="flex justify-end">
-                                <button type="button" id="closeModal" class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 mr-2">Cancelar</button>
-                                <button type="submit" class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">Adicionar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-        
-                <!-- Modal para Editar -->
-                <div id="myModal2" class="modal flex items-center justify-center">
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
-                        <h2 class="text-lg font-bold mb-4">Editar Informações</h2>
-                        <form id="editInstitutionForm" method="post" action="{% url 'editAccount' %}">
-                          {% csrf_token %}
-                            <div class="mb-4">
-                              <input type="hidden" id="idAccount" name="idAccount">
-                                <label for="editBank" class="block text-sm font-medium text-gray-700">Banco</label>
-                                <select id="editBank" name="editBank" class="mt-1 p-2 border border-gray-300 rounded-md w-full">
-                                    <option value="" disabled selected>Selecione um banco</option>
-                                    <option value="Itaú">Itaú</option>
-                                    <option value="Bradesco">Bradesco</option>
-                                    <option value="Santander">Santander</option>
-                                    <option value="Caixa Econômica Federal">Caixa Econômica Federal</option>
-                                    <option value="HSBC">HSBC</option>
-                                    <option value="Banco Safra">Banco Safra</option>
-                                    <option value="Banrisul">Banrisul</option>
-                                    <option value="Banco Inter">Banco Inter</option>
-                                    <option value="Banco Original">Banco Original</option>
-                                    <option value="nubank">nubank</option>
-                                </select>
-                            </div>
-                            <div class="mb-4">
-                                <label for="editAccountValue" class="block text-sm font-medium text-gray-700">Valor na Conta</label>
-                                <input type="text" id="editAccountValue" name="editAccountValue" required class="mt-1 p-2 border text-gray-800 border-gray-300 rounded-md w-full">
-                            </div>
-                            <div class="flex justify-end">
-                                <button type="button" id="closeModal2" class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 mr-2">Cancelar</button>
-                                <button type="submit" class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600">Salvar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-        
-            </div>
-        
-            <script>
-                 document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('myModal');
-        const openModal = document.getElementById('openModal');
-        const closeModal = document.getElementById('closeModal');
+      <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 sm:mt-0">
+        <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+          <div class="p-3 bg-red-600 bg-opacity-75 rounded-full">
+            <svg
+              class="w-6 h-6 text-white"
+              viewBox="0 0 28 28"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.19999 1.4C3.4268 1.4 2.79999 2.02681 2.79999 2.8C2.79999 3.57319 3.4268 4.2 4.19999 4.2H5.9069L6.33468 5.91114C6.33917 5.93092 6.34409 5.95055 6.34941 5.97001L8.24953 13.5705L6.99992 14.8201C5.23602 16.584 6.48528 19.6 8.97981 19.6H21C21.7731 19.6 22.4 18.9732 22.4 18.2C22.4 17.4268 21.7731 16.8 21 16.8H8.97983L10.3798 15.4H19.6C20.1303 15.4 20.615 15.1004 20.8521 14.6261L25.0521 6.22609C25.2691 5.79212 25.246 5.27673 24.991 4.86398C24.7357 4.45123 24.2852 4.2 23.8 4.2H8.79308L8.35818 2.46044C8.20238 1.83722 7.64241 1.4 6.99999 1.4H4.19999Z"
+                fill="currentColor"
+              ></path>
+              <path
+                d="M22.4 23.1C22.4 24.2598 21.4598 25.2 20.3 25.2C19.1403 25.2 18.2 24.2598 18.2 23.1C18.2 21.9402 19.1403 21 20.3 21C21.4598 21 22.4 21.9402 22.4 23.1Z"
+                fill="currentColor"
+              ></path>
+              <path
+                d="M9.1 25.2C10.2598 25.2 11.2 24.2598 11.2 23.1C11.2 21.9402 10.2598 21 9.1 21C7.9402 21 7 21.9402 7 23.1C7 24.2598 7.9402 25.2 9.1 25.2Z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </div>
+
+          <div class="mx-5">
+            <h4 class="text-2xl font-semibold text-gray-700">
+              R$ {{despesas}}
+            </h4>
+            <div class="text-gray-500">Despesas</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full px-6 mt-6 sm:w-1/2 xl:w-1/3 xl:mt-0">
+        <div class="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+          <div class="p-3 bg-yellow-600 bg-opacity-75 rounded-full">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+              class="w-6 h-6 text-white"
+            >
+              <path
+                d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z"
+              ></path>
+            </svg>
+          </div>
+
+          <div class="mx-5">
+            <h4 class="text-2xl font-semibold text-gray-700">
+              R$ {{faturamento}}
+            </h4>
+            <div class="text-gray-500">Balanço</div>
+          </div>
+        </div>
+      </div>
+      <div class="w-full px-6 mt-3 sm:w-1/2 xl:w-1/3 xl:mt-0">
+        <div
+          class="flex items-center mt-4 px-5 py-6 bg-white rounded-md shadow-sm"
+        >
+          <div class="p-3 bg-blue-600 bg-opacity-75 rounded-full">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+              class="w-6 h-6 text-white"
+            >
+              <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"></path>
+              <path
+                fill-rule="evenodd"
+                d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 14.625v-9.75zM8.25 9.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM18.75 9a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V9.75a.75.75 0 00-.75-.75h-.008zM4.5 9.75A.75.75 0 015.25 9h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V9.75z"
+                clip-rule="evenodd"
+              ></path>
+              <path
+                d="M2.25 18a.75.75 0 000 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 00-.75-.75H2.25z"
+              ></path>
+            </svg>
+          </div>
+
+          <div class="mx-5">
+            <h4 class="text-2xl font-semibold text-gray-700">
+              R$ {{total_contas}}
+            </h4>
+            <div class="text-gray-500">Total em contas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3 class="text-3xl font-medium mt-4 text-gray-700">Contas</h3>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 p-1 gap-4">
+      <!--  -->
+      <style>
+        /* Compiled dark classes from Tailwind */
+        .dark .dark\:divide-gray-700 > :not([hidden]) ~ :not([hidden]) {
+          border-color: rgba(55, 65, 81);
+        }
+        .dark .dark\:bg-gray-50 {
+          background-color: rgba(249, 250, 251);
+        }
+        .dark .dark\:bg-gray-100 {
+          background-color: rgba(243, 244, 246);
+        }
+        .dark .dark\:bg-gray-600 {
+          background-color: rgba(75, 85, 99);
+        }
+        .dark .dark\:bg-gray-700 {
+          background-color: rgba(55, 65, 81);
+        }
+        .dark .dark\:bg-gray-800 {
+          background-color: rgba(31, 41, 55);
+        }
+        .dark .dark\:bg-gray-900 {
+          background-color: rgba(17, 24, 39);
+        }
+        .dark .dark\:bg-red-700 {
+          background-color: rgba(185, 28, 28);
+        }
+        .dark .dark\:bg-green-700 {
+          background-color: rgba(4, 120, 87);
+        }
+        .dark .dark\:hover\:bg-gray-200:hover {
+          background-color: rgba(229, 231, 235);
+        }
+        .dark .dark\:hover\:bg-gray-600:hover {
+          background-color: rgba(75, 85, 99);
+        }
+        .dark .dark\:hover\:bg-gray-700:hover {
+          background-color: rgba(55, 65, 81);
+        }
+        .dark .dark\:hover\:bg-gray-900:hover {
+          background-color: rgba(17, 24, 39);
+        }
+        .dark .dark\:border-gray-100 {
+          border-color: rgba(243, 244, 246);
+        }
+        .dark .dark\:border-gray-400 {
+          border-color: rgba(156, 163, 175);
+        }
+        .dark .dark\:border-gray-500 {
+          border-color: rgba(107, 114, 128);
+        }
+        .dark .dark\:border-gray-600 {
+          border-color: rgba(75, 85, 99);
+        }
+        .dark .dark\:border-gray-700 {
+          border-color: rgba(55, 65, 81);
+        }
+        .dark .dark\:border-gray-900 {
+          border-color: rgba(17, 24, 39);
+        }
+        .dark .dark\:hover\:border-gray-800:hover {
+          border-color: rgba(31, 41, 55);
+        }
+        .dark .dark\:text-white {
+          color: rgba(255, 255, 255);
+        }
+        .dark .dark\:text-gray-50 {
+          color: rgba(249, 250, 251);
+        }
+        .dark .dark\:text-gray-100 {
+          color: rgba(243, 244, 246);
+        }
+        .dark .dark\:text-gray-200 {
+          color: rgba(229, 231, 235);
+        }
+        .dark .dark\:text-gray-400 {
+          color: rgba(156, 163, 175);
+        }
+        .dark .dark\:text-gray-500 {
+          color: rgba(107, 114, 128);
+        }
+        .dark .dark\:text-gray-700 {
+          color: rgba(55, 65, 81);
+        }
+        .dark .dark\:text-gray-800 {
+          color: rgba(31, 41, 55);
+        }
+        .dark .dark\:text-red-100 {
+          color: rgba(254, 226, 226);
+        }
+        .dark .dark\:text-green-100 {
+          color: rgba(209, 250, 229);
+        }
+        .dark .dark\:text-blue-400 {
+          color: rgba(96, 165, 250);
+        }
+        .dark .group:hover .dark\:group-hover\:text-gray-500 {
+          color: rgba(107, 114, 128);
+        }
+        .dark .group:focus .dark\:group-focus\:text-gray-700 {
+          color: rgba(55, 65, 81);
+        }
+        .dark .dark\:hover\:text-gray-100:hover {
+          color: rgba(243, 244, 246);
+        }
+        .dark .dark\:hover\:text-blue-500:hover {
+          color: rgba(59, 130, 246);
+        }
+
+        /* Custom style */
+        .header-right {
+          width: calc(100% - 3.5rem);
+        }
+        .sidebar:hover {
+          width: 16rem;
+        }
+        @media only screen and (min-width: 768px) {
+          .header-right {
+            width: calc(100% - 16rem);
+          }
+        }
+      </style>
+      <!--  -->
+      <style>
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 50;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+      </style>
+      <div
+        class="container mx-auto p-6 flex flex-col md:flex-row items-start justify-between"
+      >
+        <div
+          class="relative flex flex-col bg-white shadow-lg rounded-lg p-4 mb-3 w-full md:w-full"
+        >
+          <div class="flex justify-between mb-4">
+            <h3 class="font-semibold text-xl text-gray-800">Minhas Contas</h3>
+            <button
+              class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+              id="openModal"
+            >
+              Adicionar
+            </button>
+          </div>
+          <!-- Tabela -->
+          <div class="overflow-x-auto">
+            <table
+              class="min-w-full bg-transparent border border-gray-300 py-1 rounded-lg"
+            >
+              <thead>
+                <tr class="bg-gray-100 text-gray-600">
+                  <th class="px-4 py-2 border-b">Instituição</th>
+                  <th class="px-4 py-2 border-b">Valor</th>
+                  <th class="px-4 py-2 border-b">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for conta in contas %}
+                <tr class="text-gray-700">
+                  <td class="px-4 py-2 border-b">{{ conta.bank_name }}</td>
+                  <td class="px-4 py-2 border-b">{{ conta.coast }}</td>
+                  <td class="px-4 py-2 border-b">
+                    <button
+                      id="openModal2"
+                      class="bg-yellow-500 text-white px-2 py-1 rounded-lg hover:bg-yellow-600 transition openModal2"
+                      data-bank="{{ conta.bank_name }}"
+                      data-coast="{{ conta.coast }}"
+                      data-id="{{ conta.id }}"
+                    >
+                      Editar
+                    </button>
+                    <a
+                      href="accounts/delete/{{ conta.id }}"
+                      class="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 transition"
+                      >Apagar</a
+                    >
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Modal para Adicionar -->
+        <div id="myModal" class="modal flex items-center justify-center">
+          <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-lg font-bold mb-4">Adicionar Instituição</h2>
+            <form
+              id="institutionForm"
+              action="{% url 'addAccount' %}"
+              method="POST"
+            >
+              {% csrf_token %}
+              <div class="mb-4">
+                <label
+                  for="bank"
+                  class="block text-sm font-medium text-gray-700"
+                  >Banco</label
+                >
+                <select
+                  id="bank"
+                  name="bank"
+                  class="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                >
+                  <option value="" disabled selected>Selecione um banco</option>
+                  <option value="Itaú">Itaú</option>
+                  <option value="Bradesco">Bradesco</option>
+                  <option value="Santander">Santander</option>
+                  <option value="Caixa Econômica Federal">
+                    Caixa Econômica Federal
+                  </option>
+                  <option value="HSBC">HSBC</option>
+                  <option value="Banco Safra">Banco Safra</option>
+                  <option value="Banrisul">Banrisul</option>
+                  <option value="Banco Inter">Banco Inter</option>
+                  <option value="Banco Original">Banco Original</option>
+                  <option value="nubank">nubank</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label
+                  for="accountValue"
+                  class="block text-sm font-medium text-gray-700"
+                  >Valor na Conta</label
+                >
+                <input
+                  type="number"
+                  id="accountValue"
+                  name="accountValue"
+                  required
+                  class="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                />
+              </div>
+              <div class="flex justify-end">
+                <button
+                  type="button"
+                  id="closeModal"
+                  class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 mr-2"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
+                >
+                  Adicionar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Modal para Editar -->
+        <div id="myModal2" class="modal flex items-center justify-center">
+          <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-lg font-bold mb-4">Editar Informações</h2>
+            <form
+              id="editInstitutionForm"
+              method="post"
+              action="{% url 'editAccount' %}"
+            >
+              {% csrf_token %}
+              <div class="mb-4">
+                <input type="hidden" id="idAccount" name="idAccount" />
+                <label
+                  for="editBank"
+                  class="block text-sm font-medium text-gray-700"
+                  >Banco</label
+                >
+                <select
+                  id="editBank"
+                  name="editBank"
+                  class="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                >
+                  <option value="" disabled selected>Selecione um banco</option>
+                  <option value="Itaú">Itaú</option>
+                  <option value="Bradesco">Bradesco</option>
+                  <option value="Santander">Santander</option>
+                  <option value="Caixa Econômica Federal">
+                    Caixa Econômica Federal
+                  </option>
+                  <option value="HSBC">HSBC</option>
+                  <option value="Banco Safra">Banco Safra</option>
+                  <option value="Banrisul">Banrisul</option>
+                  <option value="Banco Inter">Banco Inter</option>
+                  <option value="Banco Original">Banco Original</option>
+                  <option value="nubank">nubank</option>
+                </select>
+              </div>
+              <div class="mb-4">
+                <label
+                  for="editAccountValue"
+                  class="block text-sm font-medium text-gray-700"
+                  >Valor na Conta</label
+                >
+                <input
+                  type="text"
+                  id="editAccountValue"
+                  name="editAccountValue"
+                  required
+                  class="mt-1 p-2 border text-gray-800 border-gray-300 rounded-md w-full"
+                />
+              </div>
+              <div class="flex justify-end">
+                <button
+                  type="button"
+                  id="closeModal2"
+                  class="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 mr-2"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  class="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
+                >
+                  Salvar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>
+    canvas {
+            height: 300px !important; /* Ajuste a altura conforme necessário */
+            width: fit-content !important;
+        }
+  </style>
+  <div class="container px-6 py-8 mx-auto flex flex-col -mt-10">
+    <h3 class="text-3xl mb-3 font-medium text-gray-700">Gráficos</h3>
+
+    <div class="flex flex-col items-center md:flex-row md:space-x-6 mb-6">
+        <!-- Gráfico de Rosca -->
+        <div class="bg-white p-6 flex items-center flex-col rounded-lg shadow-lg w-full md:w-1/2 mb-4 md:mb-0">
+            <h2 class="text-xl font-bold mb-4 text-center">Análise de finanças</h2>
+            <canvas id="myDoughnutChart" 
+            data-gastos="{{despesas}}"
+            data-receitas="{{ganhos}}"
+            
+                          ></canvas>
+        </div>
+
+    </div>
+</div>
+
+    <script>
+     const grafico = document.getElementById("myDoughnutChart");
+
+// Obtém os valores dos atributos data-gastos e data-receitas (que estão no formato brasileiro)
+var gastos = grafico.getAttribute("data-gastos");
+var receitas = grafico.getAttribute("data-receitas");
+
+// Função para converter o valor formatado (BR) para número válido
+function formatarNumero(valor) {
+  if (typeof valor === 'string') {
+    // Remove os pontos usados como separadores de milhar e substitui a vírgula pelo ponto decimal
+    valor = valor.replace(/\./g, "").replace(",", ".");
+  }
+  let numero = Number(valor);
+  // Verifica se é um número válido; se não, retorna 0
+  return isNaN(numero) || numero < 0 ? 0 : numero;
+}
+
+// Usa a função de formatação para garantir que os valores sejam números válidos
+var gastosFormatados = formatarNumero(gastos);
+var ganhosFormatados = formatarNumero(receitas);
+
+// Verifica no console se os valores formatados estão corretos
+console.log(gastosFormatados);  // Deve mostrar o valor de 'gastos' como número
+console.log(ganhosFormatados);  // Deve mostrar o valor de 'receitas' como número
+
+// Cria o gráfico de rosca (doughnut)
+const ctx = document.getElementById("myDoughnutChart").getContext("2d");
+const myDoughnutChart = new Chart(ctx, {
+  type: "doughnut",
+  data: {
+    labels: ["Despesas", "Receitas"],
+    datasets: [
+      {
+        label: "Distribuição Financeira",
+        data: [gastosFormatados, ganhosFormatados],  // Dados sempre válidos
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",   // Cor para 'Despesas'
+          "rgba(75, 192, 192, 0.2)",   // Cor para 'Receitas'
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(75, 192, 192, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Distribuição de Despesas e Receitas",
+      },
+    },
+  },
+});
+    </script>
   
-        openModal.onclick = function() {
-            modal.style.display = 'flex';
-        }
-        closeModal.onclick = function() {
-            modal.style.display = 'none';
-        }
-        window.onclick = function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        }
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("myModal");
+        const openModal = document.getElementById("openModal");
+        const closeModal = document.getElementById("closeModal");
+
+        openModal.onclick = function () {
+          modal.style.display = "flex";
+        };
+        closeModal.onclick = function () {
+          modal.style.display = "none";
+        };
+        window.onclick = function (event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        };
         function openEditModal(bank, coast, id) {
-        const idAccount = document.getElementById('idAccount')
-        const selectBank = document.getElementById('editBank');
-        const inputValue = document.getElementById('editAccountValue');
-        inputValue.value = coast;
-        idAccount.value = id;
+          const idAccount = document.getElementById("idAccount");
+          const selectBank = document.getElementById("editBank");
+          const inputValue = document.getElementById("editAccountValue");
+          inputValue.value = coast;
+          idAccount.value = id;
 
-        // Definindo o valor do select
-        Array.from(selectBank.options).forEach(option => {
+          // Definindo o valor do select
+          Array.from(selectBank.options).forEach((option) => {
             option.selected = option.value === bank;
-        });
+          });
 
-        // Definindo o valor do input
+          // Definindo o valor do input
 
-        // Exibindo o modal
-        document.getElementById('myModal2').style.display = 'flex';
+          // Exibindo o modal
+          document.getElementById("myModal2").style.display = "flex";
         }
 
         // Abrindo modal de editar
-        const openModal2Buttons = document.querySelectorAll('.openModal2');
-        openModal2Buttons.forEach(button => {
-            button.onclick = function() {
-                const id = this.getAttribute('data-id');
-                const bank = this.getAttribute('data-bank');
-                const value = this.getAttribute('data-coast');
+        const openModal2Buttons = document.querySelectorAll(".openModal2");
+        openModal2Buttons.forEach((button) => {
+          button.onclick = function () {
+            const id = this.getAttribute("data-id");
+            const bank = this.getAttribute("data-bank");
+            const value = this.getAttribute("data-coast");
 
-                // Chamar a função para abrir o modal
-                openEditModal(bank, value, id);
-            }
+            // Chamar a função para abrir o modal
+            openEditModal(bank, value, id);
+          };
         });
 
         // Fechando modal de editar
-        const closeModal2 = document.getElementById('closeModal2');
-        closeModal2.onclick = function() {
-            document.getElementById('myModal2').style.display = 'none';
-        }
+        const closeModal2 = document.getElementById("closeModal2");
+        closeModal2.onclick = function () {
+          document.getElementById("myModal2").style.display = "none";
+        };
         // Fechar modal ao clicar fora
-        window.onclick = function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-            if (event.target === document.getElementById('myModal2')) {
-                document.getElementById('myModal2').style.display = 'none';
-            }
-        }
-        });
-            </script>
-    </div>
+        window.onclick = function (event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+          if (event.target === document.getElementById("myModal2")) {
+            document.getElementById("myModal2").style.display = "none";
+          }
+        };
+      });
+    </script>
 
-
-
-{% endblock %}
+    {% endblock %}
+  </div>
+</div>
