@@ -36,7 +36,6 @@ def register(request):
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
         
-        # Validações no servidor
         if password != confirm_password:
             messages.error(request, 'As senhas não coincidem.')
         elif len(password) < 8:
@@ -44,7 +43,6 @@ def register(request):
         elif User.objects.filter(email=email).exists():
             messages.error(request, 'Um usuário com este e-mail já existe.')
         else:
-            # Cria o novo usuário
             user = User(full_name=name, email=email)
             user.set_password(password)
             user.save()
@@ -246,9 +244,24 @@ def generates(request):
     
 def profile(request):
     if 'user_id' in request.session:
+        user = User.objects.get(id=request.session['user_id'])
+
         if request.method == "GET":
-            id = request.session['user_id']
-            user = User.objects.get(id=id)
-            
-            return render(request, "logged/profile.html", {'user' : user})
+            return render(request, "logged/profile.html", {'user': user})
+
+        if request.method == "POST":
+            full_name = request.POST.get("full_name")
+            email = request.POST.get("email")
+            password = request.POST.get("password")
+
+            user.full_name = full_name
+            user.email = email
+            if password:
+                user.set_password(password)
+
+            user.save()
+
+            messages.success(request, 'Perfil atualizado com sucesso.')
+            return redirect("/finnac")
+
     return redirect("/login")

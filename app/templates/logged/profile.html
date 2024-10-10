@@ -1,65 +1,51 @@
-{% extends '../layout/base.html' %}
-
+{% extends '../layout/base.html' %} 
 {% block main %}
 
-<div class="h-screen bg-gray-200 p-8">
-    <div class="bg-white rounded-lg shadow-xl pb-8">
-        <div class="flex flex-col items-center -mt-20 mt-2">
-            <img src="https://vojislavd.com/ta-template-demo/assets/img/profile.jpg" class="w-40 border-4 border-white rounded-full">
-            <div class="flex items-center space-x-2 mt-2">
-                <p class="text-2xl">{{ user.full_name }}</p>
-                <span class="bg-blue-500 rounded-full p-1" title="Verified">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="text-gray-100 h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                </span>
-            </div>
-            <p class="text-gray-700">{{ user.email }}</p>
-        </div>
+<div class="h-full bg-gray-200 p-8">
+
+  <div class="bg-white rounded-lg shadow-xl pb-8 mb-6">
+    <div class="flex flex-col items-center -mt-4">
+      <div class="flex items-center space-x-2 mt-1">
+        <p class="text-2xl mt-5 font-bold">{{ user.full_name }}</p>
+      </div>
+      <p class="text-gray-700">{{ user.email }}</p>
     </div>
+  </div>
 
-<!-- ------------------------------------------------------------------------------------------------------------- -->
+  <div class="flex flex-col items-center">
+    <div class="flex-1 w-full sm:w-1/2">
+      <div class="bg-white rounded-lg shadow-xl p-8 mb-5">
+        <h4 class="text-xl text-gray-900 font-bold">Atualize seus dados</h4>
+        <p class="mt-2 text-gray-700">
+          {{ user.full_name }}, mantenha sua conta segura e suas finanças
+          protegidas.
+        </p>
+        <form action="{% url 'profile' %}" class="mt-3"
+        method="POST">
+            {% csrf_token %}
 
-<div class="container px-6 py-8 mx-auto -mt-10">
-<!-- component -->
-<div class="font-sans flex h-full items-center justify-center">
-    <div x-data="{ openTab: 1 }" class="p-8">
-        <div class="max-w-md mx-auto">
-            <div class="mb-4 flex space-x-4 p-2 bg-white rounded-lg shadow-md">
-                <button x-on:click="openTab = 1" :class="{ 'bg-blue-600 text-white': openTab === 1 }" class="flex-1 py-2 px-7 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300">Saldo</button>
-                <button x-on:click="openTab = 2" :class="{ 'bg-blue-600 text-white': openTab === 2 }" class="flex-1 py-2 px-7 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300">Crédito</button>
-                <!-- <button x-on:click="openTab = 3" :class="{ 'bg-blue-600 text-white': openTab === 3 }" class="flex-1 py-2 px-7 rounded-md focus:outline-none focus:shadow-outline-blue transition-all duration-300">Saldo</button> -->
-            </div>
-
-            <div x-show="openTab === 1" class="transition-all duration-300 bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-600">
-                <h2 class="text-2xl font-semibold mb-2 text-blue-600">Saldo</h2>
-                <p class="text-gray-700">Insira seu saldo total.</p>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <input type="text" class="form-control mb-3" placeholder="R$00,00" disabled>
-                    <input type="submit" value="Aplicar" class="btn btn-primary">
-                </form>
-                <!-- <input type="button" value="Atualizar" class="btn btn-primary"> -->
-            </div>
-
-            <div x-show="openTab === 2" class="transition-all duration-300 bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-600">
-                <h2 class="text-2xl font-semibold mb-2 text-blue-600">Crédito</h2>
-                <p class="text-gray-700">Insira seu crédito total.</p>
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <input type="text" class="form-control mb-3" placeholder="R$00,00" disabled>
-                    <input type="submit" value="Aplicar" class="btn btn-primary">
-                </form>
-                <!-- <input type="button" value="Atulizar" class="btn btn-primary"> -->
-            </div>
-
-            <!-- <div x-show="openTab === 3" class="transition-all duration-300 bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-600">
-                <h2 class="text-2xl font-semibold mb-2 text-blue-600">Section 3 Content</h2>
-                <p class="text-gray-700">Fusce hendrerit urna vel tortor luctus, nec tristique odio tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.</p>
-            </div> -->
-        </div>
+          <div class="mb-6">
+            <label for="full_name" class="text-sm font-medium text-gray-900 block mb-2">Nome completo:</label>
+            <input type="text" id="full_name" name="full_name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Seu nome completo aqui..." value="{{ user.full_name }}" />
+          </div>
+          <div class="mb-6">
+            <label for="email" class="text-sm font-medium text-gray-900 block mb-2">Seu melhor e-mail:</label>
+            <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="seuemail@exemplo.com" value="{{ user.email }}" />
+          </div>
+          <div class="mb-6">
+            <label for="password" class="text-sm font-medium text-gray-900 block mb-2">Nova senha:</label>
+            <input type="text" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Sua senha aqui..." />
+          </div>
+          <div class="mb-6">
+            <label for="cPassword" class="text-sm font-medium text-gray-900 block mb-2">Confirme a nova senha:</label>
+            <input type="text" id="cPassword" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Confirme sua senha aqui..." />
+          </div>
+          <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+            Confirmar
+          </button>
+        </form>
+      </div>
     </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+  </div>
 
 {% endblock %}

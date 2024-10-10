@@ -145,12 +145,21 @@
                         </div>
                     </div>
     
-                    <div x-data="{ dropdownOpen: false }" class="relative">
+                    <div x-data="{ dropdownOpen: false }" class="relative ">
                         <button @click="dropdownOpen = ! dropdownOpen"
-                            class="relative block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none">
-                            <img class="object-cover w-full h-full"
-                                src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=296&amp;q=80"
-                                alt="Your avatar">
+                            class="relative block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none flex items-center justify-center">
+                            <svg
+                            class="w-5 h-5 fill-current"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                              clip-rule="evenodd"
+                            ></path>
+                          </svg>
                         </button>
     
                         <div x-show="dropdownOpen" @click="dropdownOpen = false" class="fixed inset-0 z-10 w-full h-full"
