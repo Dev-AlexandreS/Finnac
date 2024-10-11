@@ -265,3 +265,9 @@ def profile(request):
             return redirect("/finnac")
 
     return redirect("/login")
+
+def recoverycode(request, id):
+    if 'user_id' in request.session and request.session['user_id'] == id:
+        if request.method == 'GET':
+            return render(request, "logged/recoverycode.html")
+    return redirect("/")

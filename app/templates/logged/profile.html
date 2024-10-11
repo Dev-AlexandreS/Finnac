@@ -24,28 +24,60 @@
         method="POST">
             {% csrf_token %}
 
-          <div class="mb-6">
-            <label for="full_name" class="text-sm font-medium text-gray-900 block mb-2">Nome completo:</label>
-            <input type="text" id="full_name" name="full_name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Seu nome completo aqui..." value="{{ user.full_name }}" />
+            <div class="mb-6">
+              <label for="full_name" class="text-sm font-medium text-gray-900 block mb-2">Nome completo:</label>
+              <input type="text" id="full_name" name="full_name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Seu nome completo aqui..." value="{{ user.full_name }}" />
+              <div id="full_name_error" class="text-red-500 text-sm mt-1"></div>
           </div>
           <div class="mb-6">
-            <label for="email" class="text-sm font-medium text-gray-900 block mb-2">Seu melhor e-mail:</label>
-            <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="seuemail@exemplo.com" value="{{ user.email }}" />
+              <label for="email" class="text-sm font-medium text-gray-900 block mb-2">Seu melhor e-mail:</label>
+              <input type="email" id="email" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="seuemail@exemplo.com" value="{{ user.email }}" />
+              <div id="email_error" class="text-red-500 text-sm mt-1"></div>
           </div>
-          <div class="mb-6">
-            <label for="password" class="text-sm font-medium text-gray-900 block mb-2">Nova senha:</label>
-            <input type="text" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Sua senha aqui..." />
+          <div class="mb-6 flex items-center justify-center">
+              <a href="{% url 'email' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full text-center">
+                  Trocar Senha
+              </a>
           </div>
-          <div class="mb-6">
-            <label for="cPassword" class="text-sm font-medium text-gray-900 block mb-2">Confirme a nova senha:</label>
-            <input type="text" id="cPassword" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Confirme sua senha aqui..." />
-          </div>
+          
           <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-            Confirmar
+              Confirmar
           </button>
         </form>
       </div>
     </div>
   </div>
-
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+    
+        form.addEventListener('submit', function(event) {
+            const fullName = document.getElementById('full_name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            let valid = true;
+    
+            // Limpar mensagens de erro
+            document.getElementById('full_name_error').textContent = '';
+            document.getElementById('email_error').textContent = '';
+    
+            // Validação do nome completo
+            if (fullName === '' || fullName.length < 3) {
+                document.getElementById('full_name_error').textContent = 'Por favor, insira um nome completo válido (mínimo de 3 caracteres).';
+                valid = false;
+            }
+    
+            // Validação do e-mail
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === '' || !emailPattern.test(email)) {
+                document.getElementById('email_error').textContent = 'Por favor, insira um e-mail válido.';
+                valid = false;
+            }
+    
+            // Se a validação falhar, impede o envio do formulário
+            if (!valid) {
+                event.preventDefault(); // Impede o envio do formulário
+            }
+        });
+    });
+    </script>
 {% endblock %}
