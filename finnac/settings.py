@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'emailSending',
 ]
 
 MIDDLEWARE = [
@@ -72,16 +73,6 @@ WSGI_APPLICATION = 'finnac.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'btscrxansgmmz5jziycl',
-#         'USER': 'utlakztualojl4j0',
-#         'PASSWORD': 'n46ARB573ZXzh6fXskdq',
-#         'HOST': 'btscrxansgmmz5jziycl-mysql.services.clever-cloud.com',
-#         'PORT': '3306',
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -136,3 +127,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
