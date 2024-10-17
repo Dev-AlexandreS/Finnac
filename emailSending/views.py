@@ -7,6 +7,7 @@ from app import models as modelApp
 from .models import RecoveryPass
 from django.shortcuts import render, HttpResponse, redirect
 import random
+from django.contrib.auth import update_session_auth_hash
 
 def email(request):
     user_id = request.session['user_id']
@@ -37,7 +38,7 @@ def email(request):
         subject='Recuperação de senha',
         body=email_html_message,
         from_email=settings.DEFAULT_FROM_EMAIL,
-        to=["user@gmail.com"]  # Use o email do usuário
+        to=[user_instance.email]  # Use o email do usuário
     )
 
     email.content_subtype = 'html'
@@ -73,3 +74,24 @@ def recoverypassword(request):
             return redirect(f"/finnac/auth/recoverycode/{user_id}")
         
     return HttpResponse("Painel privado")
+
+def editPassword(request):
+    if request.method == 'POST':
+        user_id = request.session.get('user_id')
+        
+        new_password = request.POST["new-password"]
+        confirm_password = request.POST["confirm-password"]
+        userModel = modelApp.User.objects.get(id=user_id)
+        if new_password != confirm_password:
+            messages.error(request, 'As senhas não coincidem.')
+        elif len(new_password) < 8:
+            messages.error(request, 'A nova senha deve ter no mínimo 8 caracteres.')
+        else:
+            # Atualiza a senha
+            userModel.set_password(new_password)
+            userModel.save()
+            update_session_auth_hash(request, userModel)  # Mantém o usuário logado após a troca de senha
+            messages.success(request, 'Senha atualizada com sucesso!')
+        return redirect("/finnac/profile/")
+        
+    return redirect("/finnac")
