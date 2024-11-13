@@ -16,8 +16,25 @@
         <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
             <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
                 <a href="" class="flex items-center">
+                    <!-- Imagem para o modo claro -->
+                    <img src="{% static 'img/logofinnac.svg' %}" class="mr-3 h-6 sm:h-9 dark:hidden" alt="Flowbite Logo" style="height: 40px;" />
+                    <!-- Imagem para o modo escuro -->
+                    <img src="{% static 'img/logoBranca.svg' %}" class="mr-3 h-6 sm:h-9 hidden dark:block" alt="Finnac Logo" style="height: 40px;" />
+                </a>
+                <div class="flex items-center lg:order-2">
+                    <a href="{% url 'login' %}" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Login</a>
+                    <a href="{% url 'register' %}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Vamos começar</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- <header>
+        <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+            <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+                <a href="" class="flex items-center">
                     <img src="{% static 'img/FINNAC.png' %}" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
-                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Finnac</span>
+                    <img src="{% static 'img/logofinnac.svg' %}" class="mr-3 h-6 sm:h-9" alt="Finnac Logo" style="height: 40px;" />
                 </a>
                 <div class="flex items-center lg:order-2">
                     <a href="{% url 'login' %}" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Login</a>
@@ -26,8 +43,9 @@
                 
             </div>
         </nav>
-    </header>
-
+    </header> -->
+    <!-- <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Finnac</span> -->
+    
     <section class="bg-white dark:bg-gray-900">
         <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
             <div class="mr-auto place-self-center lg:col-span-7">
@@ -118,8 +136,10 @@
             <div class="md:flex md:justify-between">
                 <div class="mb-6 md:mb-0">
                     <a href="https://flowbite.com" class="flex items-center">
-                        <img src="{% static 'img/FINNAC.png' %}" class="mr-3 h-10" alt="Logo" />
-                        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Finnac</span>
+                    <!-- Imagem para o modo claro -->
+                    <img src="{% static 'img/logofinnac.svg' %}" class="mr-3 h-6 sm:h-9 dark:hidden" alt="Flowbite Logo" style="height: 40px;" />
+                    <!-- Imagem para o modo escuro -->
+                    <img src="{% static 'img/logoBranca.svg' %}" class="mr-3 h-6 sm:h-9 hidden dark:block" alt="Finnac Logo" style="height: 40px;" />
                     </a>
                 </div>
                 
