@@ -20,5 +20,5 @@ Integrative Project from the Senac Taboão da Serra, part of the Software course
 #### Pre-alpha version:
 
 ```bash
-  https://ccodestartup.pythonanywhere.com/
+  https://finnac.pythonanywhere.com
 ```
