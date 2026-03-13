@@ -25,9 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-gnr-)(%(--(n(vge1f*#e#+i#kx$g#el9h!l9h9=ndzz4r8xv#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "finnac-nsc4.onrender.com"
+    ]
 
 # Application definition
 INSTALLED_APPS = [
