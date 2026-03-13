@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,10 +79,15 @@ WSGI_APPLICATION = 'finnac.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'finnac',
+        'USER': 'finnac_user',
+        'PASSWORD': 'KNfS2kolKdmREbeJADHR7gDFIMeRbbJQ',
+        'HOST': 'dpg-d6q73jsr85hc73elunmg-a.oregon-postgres.render.com',
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation
